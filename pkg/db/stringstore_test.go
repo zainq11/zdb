@@ -15,10 +15,10 @@ func TestStringStore(t *testing.T) {
 	store.set("k2", expectations["k2"])
 	store.set("k3", expectations["k3"])
 
-	for k, v := range expectations {
-		actual := store.get(k)
-		if actual != v {
-			t.Fatalf(`Actual value: %s for %s, expected: %s`, actual, k, expectations[k])
+	for ek, ev := range expectations {
+		actual := store.get(ek)
+		if actual != ev {
+			t.Fatalf(`Actual value: %s for %s, expected: %s`, actual, ek, expectations[ek])
 		}
 	}
 }
