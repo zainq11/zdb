@@ -1,13 +1,13 @@
 package db
 
-type mapBasedStore struct {
-	store map[string]string
-}
-
 type StringStore interface {
 	set(k string, v string)
 	get(k string) string
 	size() int
+}
+
+type mapBasedStore struct {
+	store map[string]string
 }
 
 func (s mapBasedStore) set(k string, v string) {

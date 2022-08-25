@@ -2,6 +2,16 @@ package db
 
 import "time"
 
+type Database interface {
+	getName() string
+	getCreatedTime() time.Time
+}
+
+type DatabaseCommands interface {
+	get(k string) string
+	set(k string, v string)
+}
+
 type Instance struct {
 	Name        string
 	CreatedTime time.Time
@@ -22,16 +32,6 @@ func (i Instance) get(k string) string {
 
 func (i Instance) set(k string, v string) {
 	i.stringStore.set(k, v)
-}
-
-type Database interface {
-	getName() string
-	getCreatedTime() time.Time
-}
-
-type DatabaseCommands interface {
-	get(k string) string
-	set(k string, v string)
 }
 
 func CreateDatabase(name string) Database {
