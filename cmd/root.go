@@ -2,22 +2,11 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"log"
+	"zdb/pkg/config"
 )
 
 var cfgFile string
-
-var config *Config
-
-type Config struct {
-	Server struct {
-		Port int `yaml:"port"`
-	} `yaml:"server"`
-	Client struct {
-		ServerAddress string `yaml:"address"`
-	} `yaml:"client"`
-}
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -51,23 +40,9 @@ func init() {
 	// serverCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func LoadConfig(cfgFile string) (config *Config) {
-	viper.SetConfigFile(cfgFile)
-	viper.AutomaticEnv()
-
-	if err := viper.ReadInConfig(); err != nil {
-		log.Panicf("Could not read config file %v", err)
-	}
-
-	log.Printf("Read Config file ... %s", viper.ConfigFileUsed())
-
-	if err := viper.Unmarshal(&config); err != nil {
-		log.Panicf("Could not unmarshall configuration data %v", err)
-	}
-
-	return
-}
-
 func initConfig() {
-	config = LoadConfig(cfgFile)
+	err := config.LoadConfig(cfgFile)
+	if err != nil {
+		log.Panicf("Could not read the config file, error: %v", err)
+	}
 }

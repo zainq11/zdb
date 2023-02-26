@@ -14,10 +14,13 @@ message GetResponse {
 }
 
 message SetRequest {
+  string key = 1;
   string value = 2;
 }
 
 message SetResponse {
+  string key = 1;
+  string value = 2;
 }
 
 service DatabaseService {

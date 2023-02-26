@@ -1,4 +1,4 @@
-module kvgo
+module zdb
 
 go 1.19
 

@@ -3,13 +3,14 @@ package db
 import "time"
 
 type Database interface {
-	getName() string
-	getCreatedTime() time.Time
+	GetName() string
+	GetCreatedTime() time.Time
+	DatabaseCommands
 }
 
 type DatabaseCommands interface {
-	get(k string) string
-	set(k string, v string)
+	Get(k string) (string, error)
+	Set(k string, v string) error
 }
 
 type Instance struct {
@@ -18,24 +19,24 @@ type Instance struct {
 	stringStore StringStore
 }
 
-func (i Instance) getName() string {
+func (i Instance) GetName() string {
 	return i.Name
 }
 
-func (i Instance) getCreatedTime() time.Time {
+func (i Instance) GetCreatedTime() time.Time {
 	return i.CreatedTime
 }
 
-func (i Instance) get(k string) string {
+func (i Instance) Get(k string) (string, error) {
 	return i.stringStore.get(k)
 }
 
-func (i Instance) set(k string, v string) {
-	i.stringStore.set(k, v)
+func (i Instance) Set(k string, v string) error {
+	return i.stringStore.set(k, v)
 }
 
 func CreateDatabase(name string) Database {
-	return Instance{
+	return &Instance{
 		Name:        name,
 		CreatedTime: time.Now(),
 		stringStore: newStringStore(),

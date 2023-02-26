@@ -1,6 +1,6 @@
 package main
 
-import "kvgo/cmd"
+import "zdb/cmd"
 
 func main() {
 	cmd.Execute()
